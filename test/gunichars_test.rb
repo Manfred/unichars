@@ -7,5 +7,5 @@ describe "Gunichars" do
     lambda {
       Gunichars
     }.should.not.raise
-  end  
+  end
 end

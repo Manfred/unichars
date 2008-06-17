@@ -1,0 +1,7 @@
+OSX
+
+$ port install glib2
+
+DEBIAN
+
+$ apt-get install libglib2.0-dev

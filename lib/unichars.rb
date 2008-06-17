@@ -10,4 +10,12 @@ class Unichars
   def size
     self.class.size(@wrapped_string)
   end
+  
+  def upcase
+    self.class.upcase(@wrapped_string)
+  end
+  
+  def downcase
+    self.class.downcase(@wrapped_string)
+  end
 end

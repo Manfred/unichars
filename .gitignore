@@ -6,3 +6,4 @@ Makefile
 pkg
 doc
 .DS_Store
+*.log
