@@ -1,7 +1,7 @@
 #include <ruby.h>
 #include <glib.h>
 
-static VALUE gunichars_size(VALUE self, VALUE string)
+static VALUE utf8_size(VALUE self, VALUE string)
 {
   VALUE result;
 
@@ -11,7 +11,7 @@ static VALUE gunichars_size(VALUE self, VALUE string)
   return result;
 }
 
-static VALUE gunichars_upcase(VALUE self, VALUE string)
+static VALUE utf8_upcase(VALUE self, VALUE string)
 {
   VALUE result;
   gchar *temp;
@@ -23,7 +23,7 @@ static VALUE gunichars_upcase(VALUE self, VALUE string)
   return result;
 }
 
-static VALUE gunichars_downcase(VALUE self, VALUE string)
+static VALUE utf8_downcase(VALUE self, VALUE string)
 {
   VALUE result;
   gchar *temp;
@@ -36,12 +36,12 @@ static VALUE gunichars_downcase(VALUE self, VALUE string)
 }
 
 void
-Init_gunichars()
+Init_glib()
 {
-  VALUE mGunichars;
+  VALUE mGlib;
 
-  mGunichars = rb_define_module("Gunichars");
-  rb_define_method(mGunichars, "size", gunichars_size, 1);
-  rb_define_method(mGunichars, "upcase", gunichars_upcase, 1);
-  rb_define_method(mGunichars, "downcase", gunichars_downcase, 1);
+  mGlib = rb_define_module("Glib");
+  rb_define_method(mGlib, "utf8_size", utf8_size, 1);
+  rb_define_method(mGlib, "utf8_upcase", utf8_upcase, 1);
+  rb_define_method(mGlib, "utf8_downcase", utf8_downcase, 1);
 }

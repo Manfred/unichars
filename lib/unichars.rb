@@ -1,21 +1,19 @@
-require 'gunichars.so'
+require 'glib.so'
 
 class Unichars
-  extend Gunichars
-  
   def initialize(string)
     @wrapped_string = string
   end
   
   def size
-    self.class.size(@wrapped_string)
+    Glib.utf8_size(@wrapped_string)
   end
   
   def upcase
-    self.class.upcase(@wrapped_string)
+    Glib.utf8_upcase(@wrapped_string)
   end
   
   def downcase
-    self.class.downcase(@wrapped_string)
+    Glib.utf8_downcase(@wrapped_string)
   end
 end

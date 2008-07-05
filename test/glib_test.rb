@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-require 'gunichars.so'
+require 'glib.so'
 
-describe "Gunichars" do
+describe "Glib" do
   it "should be defined" do
     lambda {
-      Gunichars
+      Glib
     }.should.not.raise
   end
 end

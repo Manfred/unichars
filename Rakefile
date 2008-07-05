@@ -25,7 +25,7 @@ namespace :extconf do
 end
 
 namespace :extconf do
-  extension = 'gunichars'
+  extension = 'glib'
   ext = "ext/#{extension}"
   ext_so = "#{ext}/#{extension}.#{Config::CONFIG['DLEXT']}"
   ext_files = FileList[
