@@ -1,5 +1,10 @@
 require 'glib.so'
 
+begin
+  class Unichars < ActiveSupport::Multibyte::Chars; end
+rescue NameError
+end
+
 class Unichars
   def initialize(string)
     @wrapped_string = string
@@ -15,5 +20,9 @@ class Unichars
   
   def downcase
     Glib.utf8_downcase(@wrapped_string)
+  end
+  
+  def reverse
+    Glib.utf8_reverse(@wrapped_string)
   end
 end

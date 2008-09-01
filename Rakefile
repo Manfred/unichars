@@ -1,12 +1,10 @@
-
-
 task :default => :test
 task :compile => "extconf:compile"
 
 desc "Run all tests"
 task :test => :compile do
   Dir[File.dirname(__FILE__) + '/test/**/*_test.rb'].each do |file|
-    load file
+    ruby file
   end
 end
 

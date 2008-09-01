@@ -35,6 +35,18 @@ static VALUE utf8_downcase(VALUE self, VALUE string)
   return result;
 }
 
+static VALUE utf8_reverse(VALUE self, VALUE string)
+{
+  VALUE result;
+  gchar *temp;
+
+  Check_Type(string, T_STRING);
+  temp = g_utf8_strreverse(StringValuePtr(string), RSTRING(string)->len);
+  result = rb_str_new2(temp);
+
+  return result;
+}
+
 void
 Init_glib()
 {
@@ -44,4 +56,5 @@ Init_glib()
   rb_define_module_function(mGlib, "utf8_size", utf8_size, 1);
   rb_define_module_function(mGlib, "utf8_upcase", utf8_upcase, 1);
   rb_define_module_function(mGlib, "utf8_downcase", utf8_downcase, 1);
+  rb_define_module_function(mGlib, "utf8_reverse", utf8_reverse, 1);
 }
