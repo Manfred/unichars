@@ -41,7 +41,7 @@ Init_glib()
   VALUE mGlib;
 
   mGlib = rb_define_module("Glib");
-  rb_define_method(mGlib, "utf8_size", utf8_size, 1);
-  rb_define_method(mGlib, "utf8_upcase", utf8_upcase, 1);
-  rb_define_method(mGlib, "utf8_downcase", utf8_downcase, 1);
+  rb_define_module_function(mGlib, "utf8_size", utf8_size, 1);
+  rb_define_module_function(mGlib, "utf8_upcase", utf8_upcase, 1);
+  rb_define_module_function(mGlib, "utf8_downcase", utf8_downcase, 1);
 }
