@@ -18,9 +18,21 @@ describe "A Unichars instance" do
     chars('PROFITÉRØL').downcase.should == 'profitérøl'
   end
   
+  it "should reverse strings" do
+    chars('').upcase.should == ''
+    chars('Profitérøl').reverse.should == 'lørétiforP'
+  end
+  
+  it "should return an instance of itself" do
+    chars('').upcase.class.should == Unichars
+    chars('').downcase.class.should == Unichars
+    chars('').reverse.class.should == Unichars
+  end
+  
   it "should raise a TypeError when anything except a string is passed" do
     lambda { chars(nil).size }.should.raise(TypeError)
     lambda { chars(nil).upcase }.should.raise(TypeError)
     lambda { chars(nil).downcase }.should.raise(TypeError)
+    lambda { chars(nil).reverse }.should.raise(TypeError)
   end
 end
