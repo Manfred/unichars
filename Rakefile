@@ -9,8 +9,8 @@ task :test => :compile do
 end
 
 task :clean do
-  crap = "*.{bundle,so,obj,log}"
-  ["ext/**/#{crap}", "ext/**/Makefile"].each do |glob|
+  crap = "*.{bundle,so,o,obj,log}"
+  ["*.gem", "ext/**/#{crap}", "ext/**/Makefile"].each do |glob|
     Dir.glob(glob).each do |file|
       rm(file)
     end
@@ -57,5 +57,17 @@ namespace :extconf do
         end
       end
     end
+  end
+end
+
+namespace :gem do
+  desc "Build the gem"
+  task :build do
+    sh 'gem build unichars.gemspec'
+  end
+  
+  desc "Install the gem"
+  task :install => :build do
+    sh 'sudo gem install unichars-*.gem'
   end
 end

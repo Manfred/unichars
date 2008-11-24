@@ -1,7 +1,7 @@
 require 'rubygems'
 
 Gem::Specification.new do |spec|
-  spec.name = 'Unichars'
+  spec.name = 'unichars'
   spec.version = '0.1'
   
   spec.author = "Manfred Stienstra"
@@ -15,7 +15,10 @@ Gem::Specification.new do |spec|
     people can find other uses for it.
   EOF
   
-  spec.files = Dir['lib/**/*.rb']
+  spec.files = Dir['lib/**/*.rb'] + Dir['ext/**/*']
+  
+  spec.extensions << 'ext/glib/extconf.rb'
+  spec.require_paths = ['lib']
   
   spec.has_rdoc = true
   spec.extra_rdoc_files = ['README', 'LICENSE']
