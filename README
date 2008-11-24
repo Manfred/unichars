@@ -1,7 +1,65 @@
-OSX
+-%{ Unichars }%-
+
+Unichars is a simple wrapper around Glib2. It was originally written to speed up ActiveSupport::Multibyte on Ruby 1.8 but it can probably used for other things as well.
+
+
+--^^--^^- INSTALLING -^^--^^--
+
+INSTALLING ON MAC OS X
 
 $ port install glib2
+$ gem install unichars
 
-DEBIAN
+INSTALLING ON DEBIAN
 
 $ apt-get install libglib2.0-dev
+$ gem install unichars
+
+
+--^^--^^- EXAMPLES -^^--^^--
+
+FOR USE WITH RAILS
+
+In config/environment.rb add:
+
+  config.gem 'unichars'
+
+Add config/initializers/unichars.rb:
+
+  ActiveSupport::Multibyte.proxy_class = Unichars
+
+After that you can just use Unichars through the character proxy on String:
+
+  '¡Ay Dios mío!'.chars.reverse
+
+FOR USE WITH ACTIVESUPPORT WITHOUT RAILS
+
+Note that you probably want to load ActiveSupport before loading Unichars because Unichars subclasses itself from ActiveSupport::Multibyte::Chars when you do so.
+
+  require 'rubygems' rescue LoadError
+  require 'activesupport'
+  require 'unichars'
+  ActiveSupport::Multibyte.proxy_class = Unichars
+
+After that you can just use Unichars through the character proxy on String:
+
+  '¡Ay Dios mío!'.chars.reverse
+
+FOR USE WITHOUT ACTIVESUPPORT
+
+Yeah, so, ehm. Yeah.
+
+  require 'rubygems' rescue LoadError
+  require 'unichars'
+
+After that you can do:
+
+  Unichars.new('¡Ay Dios mío!').reverse
+
+Or maybe:
+
+  class String
+    def chars
+      Unichars.new(self)
+    end
+  end
