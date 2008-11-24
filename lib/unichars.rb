@@ -1,4 +1,4 @@
-require 'glib.so'
+require 'glib'
 
 begin
   class Unichars < ActiveSupport::Multibyte::Chars; end

@@ -4,7 +4,7 @@ task :compile => "extconf:compile"
 desc "Run all tests"
 task :test => :compile do
   Dir[File.dirname(__FILE__) + '/test/**/*_test.rb'].each do |file|
-    ruby file
+    load file
   end
 end
 

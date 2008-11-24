@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-require 'unichars'
-
 describe "A Unichars instance" do
+  include TestHelpers
+  
   it "should know it's size" do
     chars('').size.should == 0
     chars('Profitérøl').size.should == 10
@@ -22,11 +22,5 @@ describe "A Unichars instance" do
     lambda { chars(nil).size }.should.raise(TypeError)
     lambda { chars(nil).upcase }.should.raise(TypeError)
     lambda { chars(nil).downcase }.should.raise(TypeError)
-  end
-  
-  protected
-  
-  def chars(string)
-    Unichars.new(string)
   end
 end
