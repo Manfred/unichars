@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'glib'
 
 begin
@@ -8,6 +10,12 @@ rescue NameError
 end
 
 class Unichars
+  NORMALIZATION_FORMS = [:c, :kc, :d, :kd]
+  
+  class << self
+    attr_accessor :default_normalization_form
+  end
+  
   def size
     Glib.utf8_size(@wrapped_string)
   end
@@ -23,4 +31,10 @@ class Unichars
   def reverse
     self.class.new(Glib.utf8_reverse(@wrapped_string))
   end
+  
+  def normalize(form=Unichars.default_normalization_form)
+    self.class.new(Glib.utf8_normalize(@wrapped_string, form))
+  end
 end
+
+Unichars.default_normalization_form = :kc

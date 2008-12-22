@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'mkmf'
 
 unless pkg_config('glib-2.0')

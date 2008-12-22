@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Chars
   attr_reader :wrapped_string
   alias to_s wrapped_string

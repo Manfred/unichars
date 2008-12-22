@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require File.dirname(__FILE__) + '/test_helper'
 
 describe "A Unichars class subclassed from ActiveSupport::Multibyte::Chars" do
