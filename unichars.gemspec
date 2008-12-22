@@ -2,7 +2,7 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
   spec.name = 'unichars'
-  spec.version = '0.2'
+  spec.version = '0.3'
   
   spec.author = "Manfred Stienstra"
   spec.email = "manfred@fngtps.com"
@@ -21,6 +21,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   
   spec.has_rdoc = true
-  spec.extra_rdoc_files = ['README', 'LICENSE']
+  spec.extra_rdoc_files = ['README', 'LICENSE', 'ext/glib/glib.c']
   spec.rdoc_options << "--charset=utf-8"
 end

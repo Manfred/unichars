@@ -1,6 +1,14 @@
 #include <ruby.h>
 #include <glib.h>
 
+/*
+ *  call-seq:
+ *    utf8_size(string)
+ *
+ *  Returns the length of the string expressed in codepoints.
+ *
+ *    Glib.utf8_size('A ehm…, word.') #=> 13
+ */
 static VALUE utf8_size(VALUE self, VALUE string)
 {
   VALUE result;
@@ -11,6 +19,14 @@ static VALUE utf8_size(VALUE self, VALUE string)
   return result;
 }
 
+/*
+ *  call-seq:
+ *    utf8_upcase(string)
+ *
+ *  Returns the string in capitals if they are are available for the supplied characters.
+ *
+ *    Glib.utf8_upcase('Sluß') #=> SLUSS
+ */
 static VALUE utf8_upcase(VALUE self, VALUE string)
 {
   VALUE result;
@@ -23,6 +39,14 @@ static VALUE utf8_upcase(VALUE self, VALUE string)
   return result;
 }
 
+/*
+ *  call-seq:
+ *    utf8_downcase(string)
+ *
+ *  Returns the string in lowercase characters if they are are available for the supplied characters.
+ *
+ *    Glib.utf8_downcase('ORGANISÉE') #=> organisée
+ */
 static VALUE utf8_downcase(VALUE self, VALUE string)
 {
   VALUE result;
@@ -35,6 +59,14 @@ static VALUE utf8_downcase(VALUE self, VALUE string)
   return result;
 }
 
+/*
+ *  call-seq:
+ *    utf8_reverse(string)
+ *
+ *  Returns a string with the characters in reverse order.
+ *
+ *    Glib.utf8_reverse('Comment ça va?') #=> av aç tnemmoC
+ */
 static VALUE utf8_reverse(VALUE self, VALUE string)
 {
   VALUE result;
@@ -47,6 +79,20 @@ static VALUE utf8_reverse(VALUE self, VALUE string)
   return result;
 }
 
+
+/*
+ *  call-seq:
+ *    utf_normalize(string, form)
+ *
+ *  Returns the normalized form of the string. See http://www.unicode.org/reports/tr15/tr15-29.html for more
+ *  information about normalization.
+ *
+ *  <i>form</i> can be one of the following: <tt>:c</tt>, <tt>:kc</tt>, <tt>:d</tt>, or <tt>:kd</tt>.
+ *
+ *    decomposed = [101, 769].pack('U*')
+ *    composed = Glib.utf8_normalize(decomposed, :kc)
+ *    composed.unpack('U*') #=> [233]
+ */
 static VALUE utf8_normalize(VALUE self, VALUE string, VALUE form)
 {
   VALUE result;
@@ -74,6 +120,9 @@ static VALUE utf8_normalize(VALUE self, VALUE string, VALUE form)
   return result;
 }
 
+
+/* The Glib module holds methods which wrap Glib2 functions.
+ */
 void
 Init_glib()
 {
