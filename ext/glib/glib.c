@@ -35,6 +35,7 @@ static VALUE utf8_upcase(VALUE self, VALUE string)
   Check_Type(string, T_STRING);
   temp = g_utf8_strup(StringValuePtr(string), RSTRING(string)->len);
   result = rb_str_new2(temp);
+  free(temp);
 
   return result;
 }
@@ -55,6 +56,7 @@ static VALUE utf8_downcase(VALUE self, VALUE string)
   Check_Type(string, T_STRING);
   temp = g_utf8_strdown(StringValuePtr(string), RSTRING(string)->len);
   result = rb_str_new2(temp);
+  free(temp);
 
   return result;
 }
@@ -75,6 +77,7 @@ static VALUE utf8_reverse(VALUE self, VALUE string)
   Check_Type(string, T_STRING);
   temp = g_utf8_strreverse(StringValuePtr(string), RSTRING(string)->len);
   result = rb_str_new2(temp);
+  free(temp);
 
   return result;
 }
@@ -116,6 +119,7 @@ static VALUE utf8_normalize(VALUE self, VALUE string, VALUE form)
 
   temp = g_utf8_normalize(StringValuePtr(string), RSTRING(string)->len, mode);
   result = rb_str_new2(temp);
+  free(temp);
 
   return result;
 }
