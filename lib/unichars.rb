@@ -12,7 +12,7 @@ end
 # Unichars is a proxy class for String. It wraps a String and implements UTF-8 safe versions of various String operations.
 # Unimplemented methods are forwarded to the wrapped string.
 #
-# Unichars uses ActiveSupport::Multibyte::Chars as a superclass if it's loaded. Otherwise it will use it's own Chars class
+# Unichars uses ActiveSupport::Multibyte::Chars as its superclass if it's loaded. Otherwise it will use its own Chars class
 # which is basically a trimmed down version of ActiveSupport's Chars class.
 #
 #   require 'unichars'
