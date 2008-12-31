@@ -8,6 +8,13 @@ task :test => :compile do
   end
 end
 
+namespace :profile do
+  desc "Profile memory"
+  task :memory => :compile do
+    sh 'valgrind --tool=memcheck --leak-check=yes --num-callers=10 --track-fds=yes ruby test/profile/memory.rb'
+  end
+end
+
 task :clean do
   crap = "*.{bundle,so,o,obj,log}"
   ["*.gem", "ext/**/#{crap}", "ext/**/Makefile"].each do |glob|

@@ -8,7 +8,7 @@ $KCODE = 'UTF8'
 require 'unichars'
 
 class MemoryTest
-  DATA = File.read(File.expand_path('../data/rshmn10j.txt', __FILE__))
+  DATA = File.read(File.expand_path('../data/rshmn10j.txt', __FILE__)).freeze
   
   def test_size
     chars(DATA).size
