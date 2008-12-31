@@ -1,5 +1,9 @@
 # encoding: utf-8
 
+# Unichars is a proxy class for String. It's used by Unichars as a trimmed down version of ActiveSupport::Multibyte::Chars
+# when ActiveSupport isn't loaded.
+#
+#   Chars.new('João') #=> #<Chars:0x34c240 @wrapped_string="João">
 class Chars
   attr_reader :wrapped_string
   alias to_s wrapped_string
