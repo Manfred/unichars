@@ -1,3 +1,7 @@
+require 'rake/rdoctask'
+
+RUBY_PLATFORM = PLATFORM unless Kernel.const_defined?(:RUBY_PLATFORM)
+
 task :default => :test
 task :compile => "extconf:compile"
 
@@ -57,7 +61,7 @@ namespace :extconf do
 
   file ext_so => ext_files do
     Dir.chdir(ext) do
-      sh(PLATFORM =~ /win32/ ? 'nmake' : 'make') do |ok, res|
+      sh(RUBY_PLATFORM =~ /win32/ ? 'nmake' : 'make') do |ok, res|
         if !ok
           require "fileutils"
           FileUtils.rm Dir.glob('*.{so,o,dll,bundle}')
@@ -76,5 +80,14 @@ namespace :gem do
   desc "Install the gem"
   task :install => :build do
     sh 'sudo gem install unichars-*.gem'
+  end
+end
+
+namespace :docs do
+  Rake::RDocTask.new('generate') do |rdoc|
+    rdoc.title = 'Unichars'
+    rdoc.main = "README"
+    rdoc.rdoc_files.include('README', 'lib/chars.rb', 'lib/unichars.rb', 'ext/glib/glib.c')
+    rdoc.options << "--all" << "--charset" << "utf-8"
   end
 end
