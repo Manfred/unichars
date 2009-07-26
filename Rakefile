@@ -1,7 +1,5 @@
 require 'rake/rdoctask'
 
-RUBY_PLATFORM = PLATFORM unless Kernel.const_defined?(:RUBY_PLATFORM)
-
 task :default => :test
 task :compile => "extconf:compile"
 
