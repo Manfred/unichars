@@ -3,7 +3,7 @@
 $:.unshift(File.expand_path('../../ext/glib', __FILE__))
 $:.unshift(File.expand_path('../../lib', __FILE__))
 
-$KCODE = 'UTF8'
+$KCODE = 'UTF8' unless 'string'.respond_to?(:encoding)
 
 require 'rubygems' rescue LoadError
 require 'test/spec'

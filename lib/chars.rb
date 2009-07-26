@@ -9,9 +9,15 @@ class Chars
   alias to_s wrapped_string
   alias to_str wrapped_string
   
-  # Creates a new Chars instance by wrapping _string_.
-  def initialize(string)
-    @wrapped_string = string
+  if 'string'.respond_to?(:force_encoding)
+    # Creates a new Chars instance by wrapping _string_.
+    def initialize(string)
+      @wrapped_string = string.dup.force_encoding(Encoding::UTF_8)
+    end
+  else
+    def initialize(string) #:nodoc:
+      @wrapped_string = string.dup
+    end
   end
   
   # Forward all undefined methods to the wrapped string.
@@ -42,7 +48,7 @@ class Chars
   def <=>(other)
     @wrapped_string <=> other.to_s
   end
-
+  
   # Returns a new Chars object containing the _other_ object concatenated to the string.
   #
   # Example:

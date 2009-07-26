@@ -1,6 +1,14 @@
 #include <ruby.h>
 #include <glib.h>
 
+#ifndef RSTRING_LEN
+#define RSTRING_LEN(string) RSTRING(string)->len
+#endif
+
+#ifndef RSTRING_PTR
+#define RSTRING_PTR(string) RSTRING(string)->ptr
+#endif
+
 /*
  *  call-seq:
  *    utf8_size(string)
@@ -14,7 +22,7 @@ static VALUE utf8_size(VALUE self, VALUE string)
   VALUE result;
 
   Check_Type(string, T_STRING);
-  result = ULONG2NUM(g_utf8_strlen(StringValuePtr(string), RSTRING(string)->len));
+  result = ULONG2NUM(g_utf8_strlen(StringValuePtr(string), RSTRING_LEN(string)));
 
   return result;
 }
@@ -33,7 +41,7 @@ static VALUE utf8_upcase(VALUE self, VALUE string)
   gchar *temp;
 
   Check_Type(string, T_STRING);
-  temp = g_utf8_strup(StringValuePtr(string), RSTRING(string)->len);
+  temp = g_utf8_strup(StringValuePtr(string), RSTRING_LEN(string));
   result = rb_str_new2(temp);
   free(temp);
 
@@ -54,7 +62,7 @@ static VALUE utf8_downcase(VALUE self, VALUE string)
   gchar *temp;
 
   Check_Type(string, T_STRING);
-  temp = g_utf8_strdown(StringValuePtr(string), RSTRING(string)->len);
+  temp = g_utf8_strdown(StringValuePtr(string), RSTRING_LEN(string));
   result = rb_str_new2(temp);
   free(temp);
 
@@ -75,7 +83,7 @@ static VALUE utf8_reverse(VALUE self, VALUE string)
   gchar *temp;
 
   Check_Type(string, T_STRING);
-  temp = g_utf8_strreverse(StringValuePtr(string), RSTRING(string)->len);
+  temp = g_utf8_strreverse(StringValuePtr(string), RSTRING_LEN(string));
   result = rb_str_new2(temp);
   free(temp);
 
@@ -114,10 +122,10 @@ static VALUE utf8_normalize(VALUE self, VALUE string, VALUE form)
   } else if (ID2SYM(rb_intern("kc")) == form) {
     mode = G_NORMALIZE_NFKC;
   } else {
-    rb_raise(rb_eArgError, "%s is not a valid normalization form, options are: :d, :kd, :c, or :kc", RSTRING(rb_inspect(form))->ptr);
+    rb_raise(rb_eArgError, "%s is not a valid normalization form, options are: :d, :kd, :c, or :kc", RSTRING_PTR(rb_inspect(form)));
   }
 
-  temp = g_utf8_normalize(StringValuePtr(string), RSTRING(string)->len, mode);
+  temp = g_utf8_normalize(StringValuePtr(string), RSTRING_LEN(string), mode);
   result = rb_str_new2(temp);
   free(temp);
 
