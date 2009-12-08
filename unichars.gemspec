@@ -2,7 +2,7 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
   spec.name = 'unichars'
-  spec.version = '0.4'
+  spec.version = '0.5'
   
   spec.author = "Manfred Stienstra"
   spec.email = "manfred@fngtps.com"
