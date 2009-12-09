@@ -79,7 +79,7 @@ describe "A Unichars instance" do
   
   it "should use the default normalization form when none was supplied" do
     string = 'A… ehm, word'
-    Glib.expects(:utf8_normalize).with(string, Unichars.default_normalization_form)
+    Glib.expects(:utf8_normalize).with(string, Unichars.default_normalization_form).returns('')
     chars(string).normalize
   end
   
@@ -90,11 +90,13 @@ describe "A Unichars instance" do
     chars('').normalize.class.should == Unichars
   end
   
-  it "should raise a TypeError when anything except a string is passed" do
-    lambda { chars(nil).size }.should.raise(TypeError)
-    lambda { chars(nil).upcase }.should.raise(TypeError)
-    lambda { chars(nil).downcase }.should.raise(TypeError)
-    lambda { chars(nil).reverse }.should.raise(TypeError)
-    lambda { chars(nil).normalize }.should.raise(TypeError)
+  if RUBY_VERSION >= "1.9" and !active_support_loaded?
+    it "should raise a TypeError when anything except a string is passed" do
+      lambda { chars(nil).size }.should.raise(TypeError)
+      lambda { chars(nil).upcase }.should.raise(TypeError)
+      lambda { chars(nil).downcase }.should.raise(TypeError)
+      lambda { chars(nil).reverse }.should.raise(TypeError)
+      lambda { chars(nil).normalize }.should.raise(TypeError)
+    end
   end
 end
