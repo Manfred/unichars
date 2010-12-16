@@ -132,6 +132,49 @@ static VALUE utf8_normalize(VALUE self, VALUE string, VALUE form)
   return result;
 }
 
+/*
+ *  call-seq:
+ *    utf8_titleize(string)
+ *
+ *  Returns a title case string.
+ *
+ *    Glib.utf8_titleize('привет всем') #=> Привет Всем
+ */
+static VALUE utf8_titleize(VALUE self, VALUE string)
+{
+  VALUE result;
+  gunichar *unichars;
+  gchar *temp;
+  GError *error;
+
+  glong len = RSTRING_LEN(string);
+  Check_Type(string, T_STRING);
+  unichars = g_utf8_to_ucs4(StringValuePtr(string), len, NULL, NULL, &error);
+
+  gboolean is_first_in_word = TRUE;
+
+  int i;
+  for (i = 0; i < len; i++) {
+    gunichar c = unichars[i];
+    if (g_unichar_isalpha(c) && is_first_in_word == TRUE) {
+      unichars[i] = g_unichar_totitle(c);
+      is_first_in_word = FALSE;
+    }
+
+    if (g_unichar_isspace(c) || g_unichar_ispunct(c)) {
+      is_first_in_word = TRUE;
+    }
+  }
+
+  temp = g_ucs4_to_utf8(unichars, len, NULL, NULL, &error);
+
+  result = rb_str_new(temp, len);
+  free(temp);
+  free(unichars);
+
+  return result;
+}
+
 
 /* The Glib module holds methods which wrap Glib2 functions.
  */
@@ -146,4 +189,5 @@ Init_glib()
   rb_define_module_function(mGlib, "utf8_downcase", utf8_downcase, 1);
   rb_define_module_function(mGlib, "utf8_reverse", utf8_reverse, 1);
   rb_define_module_function(mGlib, "utf8_normalize", utf8_normalize, 2);
+  rb_define_module_function(mGlib, "utf8_titleize", utf8_titleize, 1);
 }

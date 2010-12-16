@@ -71,6 +71,13 @@ class Unichars
   def normalize(form=Unichars.default_normalization_form)
     self.class.new(Glib.utf8_normalize(@wrapped_string, form))
   end
+
+  # Returns a Unichars instance with string in title case
+  #
+  # Unichars.new('привет всем').titleize.to_s #=> Привет Всем
+  def titleize
+    self.class.new(Glib.utf8_titleize(@wrapped_string))
+  end
 end
 
 Unichars.default_normalization_form = :kc

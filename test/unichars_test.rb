@@ -48,6 +48,11 @@ describe "A Unichars instance" do
       chars('').normalize(form).should == ''
     end
   end
+
+  it "should titleize strings" do
+    chars('привет всем').titleize.should == 'Привет Всем'
+    chars('пока.всем').titleize.should == 'Пока.Всем'
+  end
   
   it "should perform simple normalization" do
     comp_str = [
@@ -97,6 +102,7 @@ describe "A Unichars instance" do
       lambda { chars(nil).downcase }.should.raise(TypeError)
       lambda { chars(nil).reverse }.should.raise(TypeError)
       lambda { chars(nil).normalize }.should.raise(TypeError)
+      lambda { chars(nil).titleize }.should.raise(TypeError)
     end
   end
 end
