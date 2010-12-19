@@ -7,7 +7,16 @@ Unichars is a simple wrapper around Glib2. It was originally written to speed up
 
 INSTALLING ON MAC OS X
 
+You have to install Glib2. Either with MacPorts:
+
 $ port install glib2
+
+or Homebrew:
+
+$ brew install glib
+
+After that you can install the gem:
+
 $ gem install unichars
 
 INSTALLING ON DEBIAN
