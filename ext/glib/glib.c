@@ -143,36 +143,36 @@ static VALUE utf8_normalize(VALUE self, VALUE string, VALUE form)
 static VALUE utf8_titleize(VALUE self, VALUE string)
 {
   VALUE result;
-  gunichar *unichars;
   gchar *temp;
-  GError *error;
+  long index, length_in_bytes, length_in_chars;
+  gunichar *chars_as_ucs4, current_char;
+  gboolean first_character_of_word = TRUE;
 
-  glong len = RSTRING_LEN(string);
   Check_Type(string, T_STRING);
-  unichars = g_utf8_to_ucs4(StringValuePtr(string), len, NULL, NULL, &error);
 
-  gboolean is_first_in_word = TRUE;
+  length_in_bytes = RSTRING_LEN(string);
+  if ((chars_as_ucs4 = g_utf8_to_ucs4(StringValuePtr(string), length_in_bytes, NULL, &length_in_chars, NULL))) {
+    for (index = 0; index < length_in_chars; index++) {
+      current_char = chars_as_ucs4[index];
+      if (first_character_of_word == TRUE && g_unichar_isalpha(current_char)) {
+        chars_as_ucs4[index] = g_unichar_totitle(current_char);
+        first_character_of_word = FALSE;
+      }
 
-  int i;
-  for (i = 0; i < len; i++) {
-    gunichar c = unichars[i];
-    if (g_unichar_isalpha(c) && is_first_in_word == TRUE) {
-      unichars[i] = g_unichar_totitle(c);
-      is_first_in_word = FALSE;
+      if (g_unichar_isspace(current_char) || g_unichar_ispunct(current_char)) {
+        first_character_of_word = TRUE;
+      }
     }
-
-    if (g_unichar_isspace(c) || g_unichar_ispunct(c)) {
-      is_first_in_word = TRUE;
-    }
+    
+    temp = g_ucs4_to_utf8(chars_as_ucs4, -1, NULL, NULL, NULL);
+    result = rb_str_new2(temp);
+    g_free(chars_as_ucs4);
+    g_free(temp);
+    
+    return result;
+  } else {
+    return Qnil;
   }
-
-  temp = g_ucs4_to_utf8(unichars, len, NULL, NULL, &error);
-
-  result = rb_str_new(temp, len);
-  free(temp);
-  free(unichars);
-
-  return result;
 }
 
 
