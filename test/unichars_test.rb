@@ -93,6 +93,7 @@ describe "A Unichars instance" do
     chars('').downcase.class.should == Unichars
     chars('').reverse.class.should == Unichars
     chars('').normalize.class.should == Unichars
+    chars('').titleize.class.should == Unichars
   end
   
   if RUBY_VERSION >= "1.9" and !active_support_loaded?
