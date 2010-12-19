@@ -50,8 +50,10 @@ describe "A Unichars instance" do
   end
 
   it "should titleize strings" do
+    chars('').titleize.should == ''
     chars('привет всем').titleize.should == 'Привет Всем'
     chars('пока.всем').titleize.should == 'Пока.Всем'
+    chars("the sorcerors apprentice").titleize.should == 'The Sorcerors Apprentice'
   end
   
   it "should perform simple normalization" do
