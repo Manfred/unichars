@@ -32,6 +32,10 @@ class MemoryTest
     end
   end
   
+  def test_titleize
+    chars(DATA).titleize
+  end
+  
   private
   
   def chars(string)

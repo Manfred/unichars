@@ -50,8 +50,10 @@ describe "A Unichars instance" do
   end
 
   it "should titleize strings" do
+    chars('').titleize.should == ''
     chars('привет всем').titleize.should == 'Привет Всем'
     chars('пока.всем').titleize.should == 'Пока.Всем'
+    chars("the sorcerors apprentice").titleize.should == 'The Sorcerors Apprentice'
   end
   
   it "should perform simple normalization" do
@@ -93,6 +95,7 @@ describe "A Unichars instance" do
     chars('').downcase.class.should == Unichars
     chars('').reverse.class.should == Unichars
     chars('').normalize.class.should == Unichars
+    chars('').titleize.class.should == Unichars
   end
   
   if RUBY_VERSION >= "1.9" and !active_support_loaded?
