@@ -15,10 +15,10 @@ Gem::Specification.new do |spec|
     people can find other uses for it.
   EOF
   
-  spec.files = Dir['lib/**/*.rb'] + Dir['ext/**/*']
+  spec.files = `git ls-files`.split("\n")
   
   spec.extensions << 'ext/glib/extconf.rb'
-  spec.require_paths = ['lib']
+  spec.require_paths = ['lib', 'ext']
   
   spec.has_rdoc = true
   spec.extra_rdoc_files = ['README', 'LICENSE', 'ext/glib/glib.c']
