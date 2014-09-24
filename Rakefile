@@ -1,4 +1,4 @@
-require 'rake/rdoctask'
+require 'rdoc/task'
 
 task :default => :test
 task :compile => "extconf:compile"
@@ -34,7 +34,7 @@ end
 namespace :extconf do
   extension = 'glib'
   ext = "ext/#{extension}"
-  ext_so = "#{ext}/#{extension}.#{Config::CONFIG['DLEXT']}"
+  ext_so = "#{ext}/#{extension}.#{RbConfig::CONFIG['DLEXT']}"
   ext_files = FileList[
     "#{ext}/*.c",
     "#{ext}/*.h",
