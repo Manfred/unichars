@@ -86,8 +86,7 @@ describe "A Unichars instance" do
   
   it "should use the default normalization form when none was supplied" do
     string = 'A… ehm, word'
-    Glib.expects(:utf8_normalize).with(string, Unichars.default_normalization_form).returns('')
-    chars(string).normalize
+    chars(string).normalize().should == Unichars.new(Glib.utf8_normalize(string, Unichars.default_normalization_form))
   end
   
   it "should return an instance of itself" do
