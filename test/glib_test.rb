@@ -10,4 +10,10 @@ describe "Glib" do
       Glib
     }.should.not.raise
   end
+
+  it "returns strings with the UTF-8 encoding" do
+    result = Glib.utf8_downcase('Église')
+    result.should == 'église'
+    result.encoding.to_s.should == 'UTF-8'
+  end
 end

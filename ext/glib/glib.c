@@ -1,4 +1,5 @@
 #include <ruby.h>
+#include <ruby/encoding.h>
 #include <glib.h>
 
 #ifndef RSTRING_LEN
@@ -39,10 +40,11 @@ static VALUE utf8_upcase(VALUE self, VALUE string)
 {
   VALUE result;
   gchar *temp;
+  rb_encoding *utf8_enc = rb_enc_find("UTF-8");
 
   Check_Type(string, T_STRING);
   temp = g_utf8_strup(StringValuePtr(string), RSTRING_LEN(string));
-  result = rb_str_new2(temp);
+  result = rb_external_str_new_with_enc(temp, strlen(temp), utf8_enc);
   free(temp);
 
   return result;
@@ -60,10 +62,11 @@ static VALUE utf8_downcase(VALUE self, VALUE string)
 {
   VALUE result;
   gchar *temp;
+  rb_encoding *utf8_enc = rb_enc_find("UTF-8");
 
   Check_Type(string, T_STRING);
   temp = g_utf8_strdown(StringValuePtr(string), RSTRING_LEN(string));
-  result = rb_str_new2(temp);
+  result = rb_external_str_new_with_enc(temp, strlen(temp), utf8_enc);
   free(temp);
 
   return result;
@@ -81,10 +84,11 @@ static VALUE utf8_reverse(VALUE self, VALUE string)
 {
   VALUE result;
   gchar *temp;
+  rb_encoding *utf8_enc = rb_enc_find("UTF-8");
 
   Check_Type(string, T_STRING);
   temp = g_utf8_strreverse(StringValuePtr(string), RSTRING_LEN(string));
-  result = rb_str_new2(temp);
+  result = rb_external_str_new_with_enc(temp, strlen(temp), utf8_enc);
   free(temp);
 
   return result;
@@ -109,6 +113,7 @@ static VALUE utf8_normalize(VALUE self, VALUE string, VALUE form)
   VALUE result;
   gchar *temp;
   GNormalizeMode mode;
+  rb_encoding *utf8_enc = rb_enc_find("UTF-8");
 
   Check_Type(string, T_STRING);
   Check_Type(form, T_SYMBOL);
@@ -126,7 +131,7 @@ static VALUE utf8_normalize(VALUE self, VALUE string, VALUE form)
   }
 
   temp = g_utf8_normalize(StringValuePtr(string), RSTRING_LEN(string), mode);
-  result = rb_str_new2(temp);
+  result = rb_external_str_new_with_enc(temp, strlen(temp), utf8_enc);
   free(temp);
 
   return result;
@@ -152,6 +157,8 @@ static VALUE utf8_titleize(VALUE self, VALUE string)
 
   length_in_bytes = RSTRING_LEN(string);
   if ((chars_as_ucs4 = g_utf8_to_ucs4(StringValuePtr(string), length_in_bytes, NULL, &length_in_chars, NULL))) {
+    rb_encoding *utf8_enc = rb_enc_find("UTF-8");
+
     for (index = 0; index < length_in_chars; index++) {
       current_char = chars_as_ucs4[index];
       if (first_character_of_word == TRUE && g_unichar_isalpha(current_char)) {
@@ -165,7 +172,7 @@ static VALUE utf8_titleize(VALUE self, VALUE string)
     }
     
     temp = g_ucs4_to_utf8(chars_as_ucs4, -1, NULL, NULL, NULL);
-    result = rb_str_new2(temp);
+    result = rb_external_str_new_with_enc(temp, strlen(temp), utf8_enc);
     g_free(chars_as_ucs4);
     g_free(temp);
     
