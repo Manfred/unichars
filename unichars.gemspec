@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   
   spec.has_rdoc = true
-  spec.extra_rdoc_files = ['README', 'LICENSE', 'ext/glib/glib.c']
+  spec.extra_rdoc_files = ['LICENSE', 'ext/glib/glib.c']
   spec.rdoc_options << "--charset=utf-8"
+  
+  spec.add_development_dependency("peck")
 end
