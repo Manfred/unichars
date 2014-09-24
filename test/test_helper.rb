@@ -6,8 +6,7 @@ $:.unshift(File.expand_path('../../lib', __FILE__))
 $KCODE = 'UTF8' unless 'string'.respond_to?(:encoding)
 
 require 'rubygems' rescue LoadError
-require 'test/spec'
-require 'mocha'
+require 'peck/flavors/vanilla'
 
 def active_support_loaded?; false; end
 unless ENV['WITHOUT_ACTIVESUPPORT']
@@ -31,9 +30,9 @@ module TestHelpers
   end
   
   def assert_equal_codepoints(expected, actual, message=nil)
-    if message.nil?
-      message = "#{expected} != #{actual}"
-    end
-    assert_equal(inspect_codepoints(expected), inspect_codepoints(actual), message)
+    inspect_codepoints(actual).should == inspect_codepoints(expected)
   end
+end
+
+Peck::Context.once do |context|
 end
